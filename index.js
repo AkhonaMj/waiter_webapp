@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config()
 import pgPromise from "pg-promise";
 import WaiterRoutes from "./routes/waiterRoutes.js";
+import WaiterDb from "./services/waiter_database.js";
 
 const pgp = pgPromise();
 const app = express();
@@ -27,7 +28,7 @@ const db = pgp({
 
 
 // Create instances for the factory function
-
+const waiter_db = WaiterDb(db)
 
 app.engine('handlebars', exphbs);
 app.set('view engine', 'handlebars');
@@ -42,16 +43,18 @@ app.use(session({
 
 app.use(flash());
 
-const waiter_routes = WaiterRoutes()
-// app.get('/', );
+const waiters = WaiterRoutes(waiter_db)
 
 app.get('/', (req, res) => {
-    res.render('waiter'); 
+    res.render('index'); 
 });
 
-app.get('/waiters/:username', waiter_routes.waiter);
-//app.post('/waiters/:username', waiter_routes.waiter);
-// app.get('/days',);
+app.get('/waiters/:username', waiters.waiter);
+
+
+app.post('/waiters/:username', waiters.select);
+
+app.get('/days',);
 
 const PORT = process.env.PORT || 3000;
 
