@@ -54,7 +54,7 @@ app.get('/waiters/:username', waiters.waiter);
 
 app.post('/waiters/:username', waiters.select);
 
-app.get('/days',);
+app.get('/days',waiters.updateDays);
 
 const PORT = process.env.PORT || 3000;
 

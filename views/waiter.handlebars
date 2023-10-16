@@ -1,22 +1,26 @@
-<h1>Waiter App</h1>
 
-<form action="/waiters/:userclass" method="POST">
-    <label>Monday</label>
-    <input type="checkbox" name="checkday" class="check" value="Monday">
-    <label>Tuesday</label>
-    <input type="checkbox" name="checkday" class="check" value="Tuesday">
-    <label>Wednesday</label>
-    <input type="checkbox" name="checkday" class="check" value="Wednesday">
-    <label>Thursday</label>
-    <input type="checkbox" name="checkday" class="check" value="Thursday">
-    <label>Frnameaycheckday</label>
-    <input type="checkbox" name="checkday" class="check" value="Friday">
-    <label>Saturday</label>
-    <input type="checkbox" name="checkday" class="check" value="Saturday">
-    <label>Sunday</label>
-    <input type="checkbox" name="checkday" class="check" value="Sunday">
+    <h1>Waiter App</h1>
+    {{#each scheduleDays}}
+    <li>{{this.days}}</li>
+    {{/each}}
 
-</form>
-<div>
-    <button>Update</button>
-</div>
+    <form action="/waiters/{{username}}" method="POST">
+        <label for="1">Monday</label>
+        <input id="1" type="checkbox" name="checkday" class="check" value="1">
+        <label for="2">Tuesday</label>
+        <input id="2" type="checkbox" name="checkday" class="check" value="2">
+        <label for="3">Wednesday</label>
+        <input id="3" type="checkbox" name="checkday" class="check" value="3">
+        <label for="4">Thursday</label>
+        <input id="4" type="checkbox" name="checkday" class="check" value="4">
+        <label for="5">Friday</label>
+        <input id="5" type="checkbox" name="checkday" class="check" value="5">
+        <label for="6">Saturday</label>
+        <input id="6" type="checkbox" name="checkday" class="check" value="6">
+        <label for="7">Sunday</label>
+        <input id="7" type="checkbox" name="checkday" class="check" value="7">
+        <button type="submit">Update</button>
+    </form>
+ 
+</body>
+</html>
