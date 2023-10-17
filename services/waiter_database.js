@@ -20,13 +20,8 @@ export default function WaiterDb(db) {
         return result;
     }
 
-    async function getDayNamesForWaiter(user) {
-        const result = await db.any(`
-        SELECT users, days
-        FROM waiters, workdays, workday_waiter_relationship wwr
-        WHERE wwr.waiter_id = waiters.id AND wwr.workday_id = workdays.id AND users = '$1'
-        ORDER BY workday_id
-        `, [user]);
+    async function getDayNamesForWaiter(users) {
+        const result = await db.any("SELECT users, days FROM waiters, workdays, workday_waiter_relationship wwr WHERE wwr.waiter_id = waiters.id AND wwr.workday_id = workdays.id AND users = $1 ORDER BY workday_id", [users]);
         return result;
     }
 

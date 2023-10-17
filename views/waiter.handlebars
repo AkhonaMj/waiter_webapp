@@ -2,11 +2,13 @@
 
 <h1>Welcome, {{username}}!</h1>
 <p>Select your workdays</p>
+   {{#each daysForWaiter}}
+<li>{{this.days}}</li>
+    {{/each}}
 
 
 <form action="/waiters/{{username}}" method="POST">
-
-
+ 
     {{#each scheduleDays}}
     <label for="{{id}}">{{days}}</label>
     <input id="{{id}}" type="checkbox" name="checkday" class="check" value="{{id}}">

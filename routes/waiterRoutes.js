@@ -2,11 +2,13 @@ export default function WaiterRoutes(waiter_db) {
 
     async function waiter(req, res) {
         const username = req.params.username;
-        const checkdays =  await waiter_db.getDayNames()
-
+        const checkdays = await waiter_db.getDayNames();
+        const daysForWaiter = await waiter_db.getDayNamesForWaiter(username);
+        console.log(daysForWaiter);
         res.render('waiter', {
             username: username,
-            scheduleDays: checkdays
+            scheduleDays: checkdays,
+            daysForWaiter: daysForWaiter
         });
     }
 
