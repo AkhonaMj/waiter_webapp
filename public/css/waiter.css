@@ -32,3 +32,11 @@ input {
     width: 25px;
     background-color: #eee;
 }
+
+.success {
+    color: green;
+    background-color: white;
+    width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+}

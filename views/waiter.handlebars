@@ -1,11 +1,15 @@
+<script>
+    setTimeout(function () {
+        document.querySelector(".success").remove();
+    }, 3000)
+</script>
 <h1>Waiter App</h1>
 
 <h1>Welcome, {{username}}!</h1>
-<p>You will work on the following days:</p>
 {{#each daysForWaiter }}
 <li>{{this.days}}</li>
 {{/each}}
-
+<p class="success">{{successMsg}}</p>
 
 <form action="/waiters/{{username}}" method="POST">
 
