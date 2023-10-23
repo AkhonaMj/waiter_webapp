@@ -10,6 +10,8 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
-    "pg-promise": "^11.5.4"
+    "flash": "^1.1.0",
+    "pg-promise": "^11.5.4",
+    "session": "^0.1.0"
   }
 }

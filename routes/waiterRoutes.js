@@ -1,18 +1,34 @@
 export default function WaiterRoutes(waiter_db) {
-
     async function waiter(req, res) {
-        const username = req.params.username;
+        const username = req.params.username.toUpperCase();
         const checkdays = await waiter_db.getDayNames();
         const daysForWaiter = await waiter_db.getDayNamesForWaiter(username);
+        
         const successMsg = req.flash('success')[0];
-        // console.log(daysForWaiter);
+        
+        
+        const formattedDaysForWaiter = checkdays.map(day => {
+            return {
+                id: day.id,
+                days: day.days,
+                checked: daysForWaiter.some(waiterDay => waiterDay.days === day.days)
+                
+                
+                // .includes(day.id) // Set 'checked' to true if the day is included in daysForWaiter
+            };
+        });
+        console.log(daysForWaiter);
+        console.log(formattedDaysForWaiter);
+    
+       
         res.render('waiter', {
             username: username,
-            scheduleDays: checkdays,
+            scheduleDays: formattedDaysForWaiter,
             daysForWaiter: daysForWaiter,
             successMsg: successMsg
         });
     }
+    
 
     async function select(req, res) {
         const username = req.params.username;
