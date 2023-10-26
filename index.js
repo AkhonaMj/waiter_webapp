@@ -25,8 +25,6 @@ const db = pgp({
     }
 });
 
-
-
 // Create instances for the factory function
 const waiter_db = WaiterDb(db)
 
@@ -54,7 +52,7 @@ app.get('/waiters/:username', waiters.waiter);
 
 app.post('/waiters/:username', waiters.select);
 
-app.get('/days',waiters.updateDays);
+app.get('/days',waiters.viewWorkingWaiters);
 
 const PORT = process.env.PORT || 3000;
 

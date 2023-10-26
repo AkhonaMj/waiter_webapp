@@ -11,7 +11,7 @@ export default function WaiterDb(db) {
 
     async function update(waiter) {
         const waiter_id = await db.manyOrNone("SELECT FROM waiters id WHERE users = $1", [waiter])
-        const result = await db.any("SELECT days FROM workdays WHERE users = $1");
+        const result = await db.any("SELECT days FROM workdays WHERE waiter_id = $1");
         return result;
     }
 
@@ -21,7 +21,24 @@ export default function WaiterDb(db) {
     }
 
     async function getDayNamesForWaiter(users) {
-        const result = await db.any("SELECT users, days FROM waiters, workdays, workday_waiter_relationship wwr WHERE wwr.waiter_id = waiters.id AND wwr.workday_id = workdays.id AND users = $1 ORDER BY workday_id", [users]);
+        const result = await db.any(`
+        SELECT users, days
+        FROM waiters, workdays, workday_waiter_relationship wwr
+        WHERE wwr.waiter_id = waiters.id
+        AND wwr.workday_id = workdays.id
+        AND users = $1
+        ORDER BY workday_id`, [users]);
+        return result;
+    }
+
+    async function getDayNamesForAllWaiters() {
+        const result = await db.any(`
+        SELECT users, days
+        FROM waiters, workdays, workday_waiter_relationship wwr
+        WHERE wwr.waiter_id = waiters.id
+        AND wwr.workday_id = workdays.id
+        ORDER BY workday_id`
+        );
         return result;
     }
 
@@ -33,7 +50,8 @@ export default function WaiterDb(db) {
         selectDays,
         update,
         getDayNames,
-        getDayNamesForWaiter
+        getDayNamesForWaiter,
+        getDayNamesForAllWaiters
     };
 }
 
