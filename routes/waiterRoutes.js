@@ -8,17 +8,29 @@ export default function WaiterRoutes(waiter_db) {
         
         
         const formattedDaysForWaiter = checkdays.map(day => {
+            
             return {
                 id: day.id,
                 days: day.days,
-                checked: daysForWaiter.some(waiterDay => waiterDay.days === day.days)
-                
-                
-                // .includes(day.id) // Set 'checked' to true if the day is included in daysForWaiter
+                checked: daysForWaiter.some(waiterDay => waiterDay.days === day.days) // Setting 'checked' to true if the day is included in daysForWaiter
             };
         });
-        console.log(daysForWaiter);
-        console.log(formattedDaysForWaiter);
+     
+               
+        const uncheckDaysForwaiter = checkdays.map(day => {
+            
+            return {
+                id: day.id,
+                days: day.days,
+                checked: !daysForWaiter.some(waiterDay => waiterDay.days === day.days) // Setting 'checked' to true if the day is included in daysForWaiter
+            };
+        });
+     
+  
+  
+     
+        // console.log(daysForWaiter);
+        // console.log(formattedDaysForWaiter);
     
        
         res.render('waiter', {
