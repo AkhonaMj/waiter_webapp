@@ -16,5 +16,5 @@ CREATE TABLE workday_waiter_relationship (
     id serial PRIMARY KEY,
     workday_id integer REFERENCES workdays(id),
     waiter_id integer REFERENCES waiters(id),
-    UNIQUE(workday_id, waiter_id)
+    UNIQUE(workday_id, waiter_id) ON DELETE CASCADE
 );

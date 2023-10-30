@@ -14,7 +14,19 @@ const app = express();
 
 const exphbs = engine({
     defaultLayout: 'main',
-    layoutsDir: 'views/layouts'
+    layoutsDir: 'views/layouts',
+    helpers: {
+        applyClassName: function(users) {
+            if (users.length < 3) {
+                return 'too-few';
+            } else if (users.length === 3) {
+                return 'just-right';
+            } else {
+                return 'too-many';
+            }
+        }
+    }
+
 });
 
 
@@ -53,6 +65,8 @@ app.get('/waiters/:username', waiters.waiter);
 app.post('/waiters/:username', waiters.select);
 
 app.get('/days',waiters.viewWorkingWaiters);
+
+app.post('/reset', waiters.reset);
 
 const PORT = process.env.PORT || 3000;
 

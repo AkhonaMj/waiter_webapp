@@ -46,18 +46,25 @@ export default function WaiterRoutes(waiter_db) {
   async function viewWorkingWaiters(req, res) {
     //const daysForAllWaiter =  await waiter_db.getWaiterNamesForDay();
     const days = {
-      "Monday":await waiter_db.getWaiterNamesForDay("Monday"),
-      "Tuesday":await waiter_db.getWaiterNamesForDay("Tuesday"),
-      "Wednesday":await waiter_db.getWaiterNamesForDay("Wednesday"),
-      "Thursday":await waiter_db.getWaiterNamesForDay("Thursday"),
-      "Friday":await waiter_db.getWaiterNamesForDay("Friday"),
-      "Saturday":await waiter_db.getWaiterNamesForDay("Saturday"),
-      "Sunday":await waiter_db.getWaiterNamesForDay("Sunday")
-    }
-   console.log(days);
+      Monday: await waiter_db.getWaiterNamesForDay("Monday"),
+      Tuesday: await waiter_db.getWaiterNamesForDay("Tuesday"),
+      Wednesday: await waiter_db.getWaiterNamesForDay("Wednesday"),
+      Thursday: await waiter_db.getWaiterNamesForDay("Thursday"),
+      Friday: await waiter_db.getWaiterNamesForDay("Friday"),
+      Saturday: await waiter_db.getWaiterNamesForDay("Saturday"),
+      Sunday: await waiter_db.getWaiterNamesForDay("Sunday"),
+    };
+
+    console.log(days);
     res.render("admin", {
-      days
+      days,
     });
+  }
+
+  async function reset(req, res) {
+    await waiter_db.resetSchedule();
+    req.flash("success", "Schedule cleared successfully!");
+    res.redirect("/");
   }
 
   return {
@@ -65,5 +72,6 @@ export default function WaiterRoutes(waiter_db) {
     select,
     updateDays,
     viewWorkingWaiters,
+    reset,
   };
 }

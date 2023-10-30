@@ -7,11 +7,14 @@
         <tr>
           <th>{{@key}}</th>
           {{#each this}}
-          <td>{{users}}</td>
+            <td class="{{applyClassName ../this}}">{{users}}</td>
           {{/each}}
         </tr>
       {{/each}}
 
     </table>
+
+    <button type="submit" formaction="/reset"
+                  onclick="return confirm('Are you sure you want to clear schedule?')">Reset</button>
   </body>
 </form>
