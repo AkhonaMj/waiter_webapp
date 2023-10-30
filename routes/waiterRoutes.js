@@ -14,7 +14,7 @@ export default function WaiterRoutes(waiter_db) {
       };
     });
 
-    // console.log(formattedDaysForWaiter);
+     console.log(formattedDaysForWaiter);
 
     res.render("waiter", {
       username: username,
@@ -62,16 +62,16 @@ export default function WaiterRoutes(waiter_db) {
   }
 
   async function reset(req, res) {
-    await waiter_db.resetSchedule();
-    req.flash("success", "Schedule cleared successfully!");
-    res.redirect("/");
-  }
+    await waiter_db.resetSchedule()
+    req.flash('success', 'Schedule cleared successfully!')
+    res.redirect('/')
+}
 
   return {
     waiter,
     select,
     updateDays,
     viewWorkingWaiters,
-    reset,
+    reset
   };
 }
