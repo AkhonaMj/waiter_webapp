@@ -44,8 +44,20 @@ export default function WaiterRoutes(waiter_db) {
   }
 
   async function viewWorkingWaiters(req, res) {
-    await waiter_db.getDayNamesForAllWaiters();
-    res.render("admin");
+    //const daysForAllWaiter =  await waiter_db.getWaiterNamesForDay();
+    const days = {
+      "Monday":await waiter_db.getWaiterNamesForDay("Monday"),
+      "Tuesday":await waiter_db.getWaiterNamesForDay("Tuesday"),
+      "Wednesday":await waiter_db.getWaiterNamesForDay("Wednesday"),
+      "Thursday":await waiter_db.getWaiterNamesForDay("Thursday"),
+      "Friday":await waiter_db.getWaiterNamesForDay("Friday"),
+      "Saturday":await waiter_db.getWaiterNamesForDay("Saturday"),
+      "Sunday":await waiter_db.getWaiterNamesForDay("Sunday")
+    }
+   console.log(days);
+    res.render("admin", {
+      days
+    });
   }
 
   return {

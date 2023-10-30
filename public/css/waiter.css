@@ -7,6 +7,10 @@ body {
     text-shadow: 0.125rem 0.125rem 0.125rem white;
 
 }
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
 
 img.background {
     filter: (100%);
