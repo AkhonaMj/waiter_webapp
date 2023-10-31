@@ -9,6 +9,10 @@ export default function WaiterDb(db) {
         await db.none("INSERT INTO workday_waiter_relationship (workday_id, waiter_id) VALUES ($1, $2) ON CONFLICT DO NOTHING", [days, users]);
     }
 
+      async function unselectDays(days, users) {
+        await db.none("DELETE FROM workday_waiter_relationship WHERE workday_id = $1 AND waiter_id = $2", [days, users]);
+    }
+
     async function update(waiter) {
         const waiter_id = await db.manyOrNone("SELECT FROM waiters id WHERE users = $1", [waiter])
         const result = await db.any("SELECT days FROM workdays WHERE waiter_id = $1");
@@ -54,7 +58,7 @@ export default function WaiterDb(db) {
         return result;
     }
 async function resetSchedule(){
-    await db.any("DELETE FROM workday_waiter_relationship");
+    await db.any("DELETE FROM users");
 }
 
 
@@ -66,7 +70,8 @@ async function resetSchedule(){
         getDayNamesForWaiter,
         getDayNamesForAllWaiters,
         getWaiterNamesForDay,
-        resetSchedule
+        resetSchedule,
+        unselectDays
     };
 }
 

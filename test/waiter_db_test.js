@@ -21,18 +21,19 @@ describe("Waiter webapp", async function () {
     beforeEach(async function () {
         await db.none("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
         await db.none("TRUNCATE TABLE workdays RESTART IDENTITY CASCADE");
-
-
     });
 
+    describe("insertWater", async function () {
 
-     
-    describe("reset", async function () {
-        it("should be able to clear waiter schedule", async function () {
+        it("should be able to insert waiters", async function () {
             const waiterInst = WaiterDb(db);
-            await waiterInst.insertWaiter("Lisa");
-            await waiterInst.insertWaiter("Nev");
-            await waiterInst.resetSchedule();
+            await waiterInst.insertWaiter("Neev");
+            assert.deepEqual(await waiterInst.getWaiterNamesForDay(), [{ "users": "Neev" }]);
+        });
+    });
+     
+    describe("Reset", async function () {
+        it("should be able to clear waiter schedule", async function () {
             assert.deepEqual(await waiterInst.resetSchedule(), [])
 
 

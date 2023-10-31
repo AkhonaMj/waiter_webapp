@@ -3,7 +3,6 @@ export default function WaiterRoutes(waiter_db) {
     const username = req.params.username.replace(/^\w/, (c) => c.toUpperCase());
     const checkdays = await waiter_db.getDayNames();
     const daysForWaiter = await waiter_db.getDayNamesForWaiter(username);
-    // console.log(daysForWaiter);
     const successMsg = req.flash("success")[0];
 
     const formattedDaysForWaiter = checkdays.map((day) => {
@@ -14,11 +13,17 @@ export default function WaiterRoutes(waiter_db) {
       };
     });
 
-     console.log(formattedDaysForWaiter);
+    const uncheckDaysForWaiter = checkdays.map((day) => {
+      return {
+        days: day.days,
+        checked: false, // Setting 'checked' to false to uncheck the checkbox
+      };
+    });
 
     res.render("waiter", {
       username: username,
       scheduleDays: formattedDaysForWaiter,
+      uncheckDaysForWaiter,
       daysForWaiter: daysForWaiter,
       successMsg: successMsg,
     });
@@ -27,14 +32,20 @@ export default function WaiterRoutes(waiter_db) {
   async function select(req, res) {
     const username = req.params.username;
     const scheduleDays = req.body.checkday;
+    const dayIds = ["1", "2", "3", "4", "5", "6", "7"];
     const waiter_id = await waiter_db.insertWaiter(username);
 
-    for (const workday_id of scheduleDays) {
-      //console.log("workday_id: " + workday_id);
-      await waiter_db.selectDays(Number(workday_id), waiter_id);
-      req.flash("success", "You have successfully updated your schedule.");
+    console.log(scheduleDays);
+    for (const workday_id of dayIds) {
+      if(scheduleDays && scheduleDays.includes(workday_id)){
+        await waiter_db.selectDays(Number(workday_id), waiter_id);
+      }else{
+        await waiter_db.unselectDays(Number(workday_id), waiter_id);
     }
-    //    console.log(req.body.checkday);
+    req.flash("success", "You have successfully updated your schedule.");
+    }
+
+    console.log(req.body.checkday);
     res.redirect("/waiters/" + req.params.username);
   }
 
@@ -44,7 +55,6 @@ export default function WaiterRoutes(waiter_db) {
   }
 
   async function viewWorkingWaiters(req, res) {
-    //const daysForAllWaiter =  await waiter_db.getWaiterNamesForDay();
     const days = {
       Monday: await waiter_db.getWaiterNamesForDay("Monday"),
       Tuesday: await waiter_db.getWaiterNamesForDay("Tuesday"),
@@ -62,16 +72,16 @@ export default function WaiterRoutes(waiter_db) {
   }
 
   async function reset(req, res) {
-    await waiter_db.resetSchedule()
-    req.flash('success', 'Schedule cleared successfully!')
-    res.redirect('/')
-}
+    await waiter_db.resetSchedule();
+    req.flash("success", "Schedule cleared successfully!");
+    res.redirect("/");
+  }
 
   return {
     waiter,
     select,
     updateDays,
     viewWorkingWaiters,
-    reset
+    reset,
   };
 }
