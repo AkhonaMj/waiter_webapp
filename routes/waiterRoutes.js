@@ -13,17 +13,9 @@ export default function WaiterRoutes(waiter_db) {
       };
     });
 
-    const uncheckDaysForWaiter = checkdays.map((day) => {
-      return {
-        days: day.days,
-        checked: false, // Setting 'checked' to false to uncheck the checkbox
-      };
-    });
-
     res.render("waiter", {
       username: username,
       scheduleDays: formattedDaysForWaiter,
-      uncheckDaysForWaiter,
       daysForWaiter: daysForWaiter,
       successMsg: successMsg,
     });
@@ -37,12 +29,12 @@ export default function WaiterRoutes(waiter_db) {
 
     console.log(scheduleDays);
     for (const workday_id of dayIds) {
-      if(scheduleDays && scheduleDays.includes(workday_id)){
+      if (scheduleDays && scheduleDays.includes(workday_id)) {
         await waiter_db.selectDays(Number(workday_id), waiter_id);
-      }else{
+      } else {
         await waiter_db.unselectDays(Number(workday_id), waiter_id);
-    }
-    req.flash("success", "You have successfully updated your schedule.");
+      }
+      req.flash("success", "You have successfully updated your schedule.");
     }
 
     console.log(req.body.checkday);

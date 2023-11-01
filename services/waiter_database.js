@@ -58,7 +58,7 @@ export default function WaiterDb(db) {
         return result;
     }
 async function resetSchedule(){
-    await db.any("DELETE FROM users");
+    await db.any("DELETE FROM workday_waiter_relationship");
 }
 
 
