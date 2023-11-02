@@ -41,10 +41,6 @@ export default function WaiterRoutes(waiter_db) {
     res.redirect("/waiters/" + req.params.username);
   }
 
-  async function updateDays(req, res) {
-    await waiter_db.update();
-    res.redirect("/waiters");
-  }
 
   async function viewWorkingWaiters(req, res) {
     const days = {
@@ -72,7 +68,7 @@ export default function WaiterRoutes(waiter_db) {
   return {
     waiter,
     select,
-    updateDays,
+
     viewWorkingWaiters,
     reset,
   };

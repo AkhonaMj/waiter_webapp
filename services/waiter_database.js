@@ -13,11 +13,7 @@ export default function WaiterDb(db) {
         await db.none("DELETE FROM workday_waiter_relationship WHERE workday_id = $1 AND waiter_id = $2", [days, users]);
     }
 
-    async function update(waiter) {
-        const waiter_id = await db.manyOrNone("SELECT FROM waiters id WHERE users = $1", [waiter])
-        const result = await db.any("SELECT days FROM workdays WHERE waiter_id = $1");
-        return result;
-    }
+ 
 
     async function getDayNames() {
         const result = await db.any("SELECT * FROM workdays");
@@ -65,7 +61,6 @@ async function resetSchedule(){
     return {
         insertWaiter,
         selectDays,
-        update,
         getDayNames,
         getDayNamesForWaiter,
         getDayNamesForAllWaiters,
