@@ -27,8 +27,8 @@ describe("Waiter webapp", async function () {
 
         it("should be able to insert waiters", async function () {
             const waiterInst = WaiterDb(db);
-            await waiterInst.insertWaiter("Neev");
-            assert.deepEqual(await waiterInst.getWaiterNamesForDay(), [{ "users": "Neev" }]);
+            await waiterInst.insertWaiter('Neev');
+            assert.deepEqual(await waiterInst.getWaiterNamesForDay(), [{ users: 'Neev' }]);
         });
     });
      
