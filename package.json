@@ -1,7 +1,32 @@
 {
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "type": "module",
+  "license": "AGPL-version-3.0",
+  "private": false,
   "engines": {
-    "node": ">= 16.0.0"
+    "node": ">= 14.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": "",
+  "keywords": [],
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "contributors": [],
+  "scripts": {
+    "dev": "",
+    "test": "mocha",
+    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -10,8 +35,13 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
-    "flash": "^1.1.0",
-    "pg-promise": "^11.5.4",
-    "session": "^0.1.0"
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1",
+    "pg": "^8.11.3",
+    "pg-promise": "^11.5.4"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">= 16.0.0"
   }
 }
