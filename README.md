@@ -1,0 +1,1 @@
+# waiter_webapp[![.github/workflows/node.js.yml](https://github.com/AkhonaMj/waiter_webapp/actions/workflows/node.js.yml/badge.svg)](https://github.com/AkhonaMj/waiter_webapp/actions/workflows/node.js.yml)
