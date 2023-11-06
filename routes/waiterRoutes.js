@@ -4,7 +4,7 @@ export default function WaiterRoutes(waiter_db) {
     const checkdays = await waiter_db.getDayNames();
     const daysForWaiter = await waiter_db.getDayNamesForWaiter(username);
     const successMsg = req.flash("success")[0];
-
+   // console.log(daysForWaiter);
     const formattedDaysForWaiter = checkdays.map((day) => {
       return {
         id: day.id,
@@ -27,7 +27,7 @@ export default function WaiterRoutes(waiter_db) {
     const dayIds = ["1", "2", "3", "4", "5", "6", "7"];
     const waiter_id = await waiter_db.insertWaiter(username);
 
-    console.log(scheduleDays);
+    // console.log(username);
     for (const workday_id of dayIds) {
       if (scheduleDays && scheduleDays.includes(workday_id)) {
         await waiter_db.selectDays(Number(workday_id), waiter_id);
@@ -37,10 +37,9 @@ export default function WaiterRoutes(waiter_db) {
       req.flash("success", "You have successfully updated your schedule.");
     }
 
-    console.log(req.body.checkday);
+    // console.log(req.body.checkday);
     res.redirect("/waiters/" + req.params.username);
   }
-
 
   async function viewWorkingWaiters(req, res) {
     const days = {
@@ -53,7 +52,7 @@ export default function WaiterRoutes(waiter_db) {
       Sunday: await waiter_db.getWaiterNamesForDay("Sunday"),
     };
 
-    console.log(days);
+  console.log(days);
     res.render("admin", {
       days,
     });
@@ -62,7 +61,7 @@ export default function WaiterRoutes(waiter_db) {
   async function reset(req, res) {
     await waiter_db.resetSchedule();
     req.flash("success", "Schedule cleared successfully!");
-    res.redirect("/");
+    res.redirect("/days");
   }
 
   return {

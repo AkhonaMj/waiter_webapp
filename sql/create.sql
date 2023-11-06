@@ -12,9 +12,23 @@ CREATE TABLE waiters (
     users TEXT NOT NULL UNIQUE
 );
 
+
 CREATE TABLE workday_waiter_relationship (
     id serial PRIMARY KEY,
     workday_id integer REFERENCES workdays(id),
     waiter_id integer REFERENCES waiters(id),
-    UNIQUE(workday_id, waiter_id) ON DELETE CASCADE
+    UNIQUE(workday_id, waiter_id)
 );
+
+ALTER TABLE workday_waiter_relationship
+    ADD CONSTRAINT fk_workday
+    FOREIGN KEY (workday_id)
+    REFERENCES workdays(id)
+    ON DELETE CASCADE;
+
+ALTER TABLE workday_waiter_relationship
+    ADD CONSTRAINT fk_waiter
+    FOREIGN KEY (waiter_id)
+    REFERENCES waiters(id)
+    ON DELETE CASCADE;
+
