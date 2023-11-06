@@ -68,7 +68,6 @@ export default function WaiterRoutes(waiter_db) {
   return {
     waiter,
     select,
-
     viewWorkingWaiters,
     reset,
   };
