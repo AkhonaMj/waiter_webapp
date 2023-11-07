@@ -23,11 +23,11 @@ describe("Waiter Webapp", function () {
  // this.timeout(5000);
 
   beforeEach(async function () {
-    await db.none("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
+    await db.none("TRUNCATE TABLE workday_waiter_relationship RESTART IDENTITY CASCADE");
   });
 
 
-  
+
   describe("insertWaiter", function () {
     it("should insert a waiter name into the database", async () => {
       const waiterInst = WaiterDb(db);
