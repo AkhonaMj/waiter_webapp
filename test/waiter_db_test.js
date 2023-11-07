@@ -4,8 +4,15 @@ import pgPromise from "pg-promise";
 import dotenv from "dotenv";
 dotenv.config();
 const pgp = pgPromise();
-const connectionString = process.env.CONNECTION_STRING;
-const db = pgp(connectionString);
+//const connectionString = process.env.CONNECTION_STRING;
+// const db = pgp(connectionString);
+const db = pgp({
+  connectionString: process.env.CONNECTION_STRING,
+  ssl: {
+      rejectUnauthorized: false
+  }
+});
+
 
 // Creating an instance for the database factory function
 
@@ -99,9 +106,7 @@ describe("Waiter Webapp", function () {
 
       await waiterInst.resetSchedule();
 
-      assert.deepStrictEqual([],workdaysForWaiters);
+      assert.deepStrictEqual([], workdaysForWaiters);
     });
   });
-
-
 });
