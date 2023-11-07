@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "waiter_webapp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,14 +17,10 @@
   },
   "bugs": "",
   "keywords": [],
-  "author": {
-    "name": "",
-    "email": "",
-    "url": ""
-  },
+  "author": "",
   "contributors": [],
   "scripts": {
-    "dev": "",
+    "dev": "nodemon index.js",
     "test": "mocha",
     "start": "node index.js"
   },
@@ -42,5 +38,8 @@
   },
   "devDependencies": {
     "mocha": "^10.2.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }

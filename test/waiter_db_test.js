@@ -19,13 +19,15 @@ const db = pgp({
 describe("Waiter Webapp", function () {
   const waiterInst = WaiterDb(db);
 
-  
+
  // this.timeout(5000);
 
   beforeEach(async function () {
     await db.none("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
   });
 
+
+  
   describe("insertWaiter", function () {
     it("should insert a waiter name into the database", async () => {
       const waiterInst = WaiterDb(db);
