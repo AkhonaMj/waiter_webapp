@@ -20,10 +20,10 @@ describe("Waiter Webapp", function () {
   const waiterInst = WaiterDb(db);
 
 
- // this.timeout(5000);
+  this.timeout(5000);
 
   beforeEach(async function () {
-    await db.none("TRUNCATE TABLE workday_waiter_relationship RESTART IDENTITY CASCADE");
+    await db.none("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
   });
 
 
