@@ -22,9 +22,9 @@ describe("Waiter Webapp", function () {
 
   this.timeout(5000);
 
-  beforeEach(async function () {
-    await db.none("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
-  });
+  // beforeEach(async function () {
+  //   await db.none("TRUNCATE TABLE waiters RESTART IDENTITY CASCADE");
+  // });
 
 
 
