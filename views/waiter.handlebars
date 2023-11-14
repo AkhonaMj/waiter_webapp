@@ -12,8 +12,8 @@
 <form action="/waiters/{{username}}" method="POST">
 
 {{#each scheduleDays}}
-    <label for="{{id}}">{{days}}</label>
     <input id="{{id}}" type="checkbox" name="checkday" class="check" value="{{id}}" {{#if checked}} checked {{else}} unchecked {{/if}} >
+    <label for="{{id}}">{{days}}</label>
 {{/each}}
 
     <button type="submit">Update</button>

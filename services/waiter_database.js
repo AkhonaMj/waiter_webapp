@@ -8,6 +8,14 @@ export default function WaiterDb(db) {
   }
 
   async function selectDays(days, users) {
+    const selectedDaysCount = await db.one(
+      "SELECT COUNT(*) FROM workday_waiter_relationship WHERE waiter_id = $1",
+      [users]
+    );
+    if (selectedDaysCount >= 2) {
+      // You can throw an error or handle it as needed
+      throw new Error("Cannot select more than two days.");
+    }
     await db.none(
       "INSERT INTO workday_waiter_relationship (workday_id, waiter_id) VALUES ($1, $2) ON CONFLICT DO NOTHING",
       [days, users]
