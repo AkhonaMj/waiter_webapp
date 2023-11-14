@@ -30,4 +30,4 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     env:
-      CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      CONNECTION_STRING: postgres://aehaetgz:vTHethKyyDQaGFG-fNYdKs4haxajH_lE@rogue.db.elephantsql.com/aehaetgz
