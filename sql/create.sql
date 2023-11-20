@@ -9,7 +9,8 @@ CREATE TABLE workdays (
 
 CREATE TABLE waiters (
     id serial PRIMARY KEY,
-    users TEXT NOT NULL UNIQUE
+    users TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
 );
 
 
@@ -31,4 +32,3 @@ ALTER TABLE workday_waiter_relationship
     FOREIGN KEY (waiter_id)
     REFERENCES waiters(id)
     ON DELETE CASCADE;
-

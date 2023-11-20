@@ -7,6 +7,7 @@ export default function WaiterDb(db) {
     return result.id;
   }
 
+
   async function selectDays(days, users) {
     const selectedDaysCount = await db.one(
       "SELECT COUNT(*) FROM workday_waiter_relationship WHERE waiter_id = $1",
@@ -71,8 +72,29 @@ export default function WaiterDb(db) {
     );
     return result;
   }
+
   async function resetSchedule() {
-    await db.any("DELETE FROM workday_waiter_relationship");
+    await db.none("DELETE FROM workday_waiter_relationship");
+  }
+
+  async function checkUserPassword(user, password) {
+    return await db.oneOrNone(
+      "SELECT users FROM waiters WHERE users = $1 AND password = $2",
+      [user, password]
+    );
+  }
+
+  async function checkUser(user) {
+    return await db.oneOrNone("SELECT users FROM waiters WHERE users = $1", [
+      user,
+    ]);
+  }
+
+  async function registerUser(user, password) {
+    await db.none("INSERT INTO waiters (users, password) VALUES ($1, $2)", [
+      user,
+      password,
+    ]);
   }
 
   return {
@@ -84,5 +106,8 @@ export default function WaiterDb(db) {
     getWaiterNamesForDay,
     resetSchedule,
     unselectDays,
+    checkUserPassword,
+    registerUser,
+    checkUser
   };
 }

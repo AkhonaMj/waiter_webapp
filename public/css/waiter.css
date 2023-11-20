@@ -84,7 +84,7 @@ input[type="text"],input[type="password"],input[type="submit"]{
   margin-right: auto;
 }
 
-.login {
+.login, .register {
     background-color: #fff;
     text-align: center;
     width: 300px;

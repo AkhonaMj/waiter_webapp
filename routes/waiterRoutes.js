@@ -1,10 +1,30 @@
 export default function WaiterRoutes(waiter_db) {
-  // async function login(req, res) {
-    
-  //   return {
 
-  //   };
-  // }
+  async function login(req, res) {
+    const password = req.body.password;
+    const username = req.body.username;
+    const exist = await waiter_db.checkUserPassword(username, password);
+
+    if (exist) {
+      res.redirect("/waiters/" + username);
+    } else {
+      res.redirect("/register");
+    }
+  }
+
+  async function register(req, res) {
+    const password = req.body.password;
+    const username = req.body.username;
+    const exist = await waiter_db.checkUser(username);
+    console.log(exist);
+
+    if (!exist) {
+      await waiter_db.registerUser(username, password);
+      res.redirect("/login");
+    } else {
+      res.redirect("/register");
+    }
+  }
 
   async function waiter(req, res) {
     const username = req.params.username.replace(/^\w/, (c) => c.toUpperCase());
@@ -19,6 +39,7 @@ export default function WaiterRoutes(waiter_db) {
         checked: daysForWaiter.some((waiterDay) => waiterDay.days === day.days), // Setting 'checked' to true if the day is included in daysForWaiter
       };
     });
+
 
     res.render("waiter", {
       username: username,
@@ -39,7 +60,7 @@ export default function WaiterRoutes(waiter_db) {
         "success",
         "Please select at least two days for your schedule."
       );
-      return res.redirect("/waiters/" + req.params.username);
+      res.redirect("/waiters/" + req.params.username);
     }
 
     // Unselect all days first
@@ -86,6 +107,7 @@ export default function WaiterRoutes(waiter_db) {
     select,
     viewWorkingWaiters,
     reset,
-   //. login,
+    login,
+    register
   };
 }

@@ -26,7 +26,6 @@ const exphbs = engine({
             }
         }
     }
-
 });
 
 
@@ -56,8 +55,22 @@ app.use(flash());
 const waiters = WaiterRoutes(waiter_db)
 
 app.get('/', (req, res) => {
-    res.render('index'); 
+    res.redirect('/login'); 
 });
+
+app.get('/login', (req, res) => {
+    res.render('login');
+  });
+  
+app.post('/login', waiters.login)
+
+
+app.get('/register', (req, res) => {
+    res.render('register')
+});
+
+app.post('/register', waiters.register)
+
 
 app.get('/waiters/:username', waiters.waiter);
 
