@@ -1,11 +1,11 @@
 export default function WaiterDb(db) {
-  async function insertWaiter(users) {
-    const result = await db.one(
-      "INSERT INTO waiters (users) VALUES ($1) ON CONFLICT (users) DO UPDATE SET users = excluded.users RETURNING id",
-      [users]
-    );
-    return result.id;
-  }
+  // async function insertWaiter(users) {
+  //   const result = await db.one(
+  //     "INSERT INTO waiters (users) VALUES ($1) ON CONFLICT (users) DO UPDATE SET users = excluded.users RETURNING id",
+  //     [users]
+  //   );
+  //   return result.id;
+  // }
 
 
   async function selectDays(days, users) {
@@ -98,7 +98,7 @@ export default function WaiterDb(db) {
   }
 
   return {
-    insertWaiter,
+   // insertWaiter,
     selectDays,
     getDayNames,
     getDayNamesForWaiter,

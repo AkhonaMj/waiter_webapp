@@ -1,5 +1,4 @@
 export default function WaiterRoutes(waiter_db) {
-
   async function login(req, res) {
     const password = req.body.password;
     const username = req.body.username;
@@ -40,7 +39,6 @@ export default function WaiterRoutes(waiter_db) {
       };
     });
 
-
     res.render("waiter", {
       username: username,
       scheduleDays: formattedDaysForWaiter,
@@ -48,11 +46,12 @@ export default function WaiterRoutes(waiter_db) {
       successMsg: successMsg,
     });
   }
+
   async function select(req, res) {
-    const username = req.params.username;
+    const username = req.body.username;
     const scheduleDays = req.body.checkday;
     const dayIds = ["1", "2", "3", "4", "5", "6", "7"];
-    const waiter_id = await waiter_db.insertWaiter(username);
+    //  const waiter_id = await waiter_db.insertWaiter(username);
 
     // Check if less than two days are selected
     if (!scheduleDays || scheduleDays.length < 2) {
@@ -60,18 +59,18 @@ export default function WaiterRoutes(waiter_db) {
         "success",
         "Please select at least two days for your schedule."
       );
-      res.redirect("/waiters/" + req.params.username);
+      res.redirect("/waiters/" + username);
     }
 
     // Unselect all days first
     for (const workday_id of dayIds) {
-      await waiter_db.unselectDays(Number(workday_id), waiter_id);
+      await waiter_db.unselectDays(Number(workday_id));
     }
 
     // Select the chosen days
     for (const workday_id of dayIds) {
       if (scheduleDays.includes(workday_id)) {
-        await waiter_db.selectDays(Number(workday_id), waiter_id);
+        await waiter_db.selectDays(Number(workday_id));
       }
     }
 
@@ -108,6 +107,6 @@ export default function WaiterRoutes(waiter_db) {
     viewWorkingWaiters,
     reset,
     login,
-    register
+    register,
   };
 }
