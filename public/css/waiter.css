@@ -12,12 +12,15 @@ table, th, td {
     border-collapse: collapse;
     text-align: center;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 35px;
     margin-left: auto;
     margin-right: auto; 
     background-color: white;
+    padding: 5px;
   }
-
+td {
+font-weight: 500;
+}
 .too-many {
     background-color: red;
   
@@ -65,7 +68,7 @@ input {
     margin: 0 auto;
 }
 .error {
-  color: green;
+  color: red;
   background-color: white;
   width: fit-content;
   text-align: center;
@@ -91,3 +94,12 @@ input[type="text"],input[type="password"],input[type="submit"]{
     padding: 20px;
     margin: 0 auto; /* Center horizontally */
 }
+.instruction{
+  font-weight: 700;
+}
+
+/* select{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+} */

@@ -1,16 +1,16 @@
 DROP TABLE IF EXISTS workday_waiter_relationship CASCADE;
-DROP TABLE IF EXISTS workdays CASCADE;
+-- DROP TABLE IF EXISTS workdays CASCADE;
 DROP TABLE IF EXISTS waiters CASCADE;
 
-CREATE TABLE workdays (
-    id serial PRIMARY KEY,
-    days TEXT NOT NULL
-);
+-- CREATE TABLE workdays (
+--     id serial PRIMARY KEY,
+--     days TEXT NOT NULL
+-- );
 
 CREATE TABLE waiters (
     id serial PRIMARY KEY,
     users TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
+    password TEXT
 );
 
 

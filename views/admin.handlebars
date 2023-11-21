@@ -3,8 +3,8 @@
 <form action="/days" method="POST">
 
   <body>
-    <table>
-
+<p class="success">{{successMsg}}</p>
+    {{!-- <table>
       {{#each days}}
         <tr>
           <th>{{@key}}</th>
@@ -14,7 +14,21 @@
         </tr>
       {{/each}}
 
-    </table>
+    </table> --}}
+<table>
+  <tr>
+    {{#each days}}
+      <th>{{@key}}</th>
+    {{/each}}
+  </tr>
+  <tr>
+    {{#each days}}
+      {{#each this}}
+        <td class="{{applyClassName ../this}}">{{users}}</td>
+      {{/each}}
+    {{/each}}
+  </tr>
+</table>
 
     <button type="submit" formaction="/reset"
                   onclick="return confirm('Are you sure you want to clear schedule?')">Reset</button>

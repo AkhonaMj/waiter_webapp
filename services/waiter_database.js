@@ -1,22 +1,19 @@
 export default function WaiterDb(db) {
-  // async function insertWaiter(users) {
-  //   const result = await db.one(
-  //     "INSERT INTO waiters (users) VALUES ($1) ON CONFLICT (users) DO UPDATE SET users = excluded.users RETURNING id",
-  //     [users]
-  //   );
-  //   return result.id;
-  // }
+  async function insertWaiter(users) {
+    const result = await db.one(
+      "INSERT INTO waiters (users) VALUES ($1) ON CONFLICT (users) DO UPDATE SET users = excluded.users RETURNING id",
+      [users]
+    );
+    return result.id;
+  }
 
 
   async function selectDays(days, users) {
-    const selectedDaysCount = await db.one(
+     await db.one(
       "SELECT COUNT(*) FROM workday_waiter_relationship WHERE waiter_id = $1",
       [users]
     );
-    if (selectedDaysCount >= 2) {
-      // You can throw an error or handle it as needed
-      throw new Error("Cannot select more than two days.");
-    }
+   
     await db.none(
       "INSERT INTO workday_waiter_relationship (workday_id, waiter_id) VALUES ($1, $2) ON CONFLICT DO NOTHING",
       [days, users]
@@ -77,7 +74,7 @@ export default function WaiterDb(db) {
     await db.none("DELETE FROM workday_waiter_relationship");
   }
 
-  async function checkUserPassword(user, password) {
+  async function checkUserAndPassword(user, password) {
     return await db.oneOrNone(
       "SELECT users FROM waiters WHERE users = $1 AND password = $2",
       [user, password]
@@ -98,7 +95,7 @@ export default function WaiterDb(db) {
   }
 
   return {
-   // insertWaiter,
+    insertWaiter,
     selectDays,
     getDayNames,
     getDayNamesForWaiter,
@@ -106,7 +103,7 @@ export default function WaiterDb(db) {
     getWaiterNamesForDay,
     resetSchedule,
     unselectDays,
-    checkUserPassword,
+    checkUserAndPassword,
     registerUser,
     checkUser
   };

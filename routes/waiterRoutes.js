@@ -2,14 +2,29 @@ export default function WaiterRoutes(waiter_db) {
   async function login(req, res) {
     const password = req.body.password;
     const username = req.body.username;
-    const exist = await waiter_db.checkUserPassword(username, password);
-
+    const exist = await waiter_db.checkUserAndPassword(username, password);
+    const role = req.body.role;
     if (exist) {
-      res.redirect("/waiters/" + username);
+      if (role === 'admin') {
+        res.redirect("/days");
+      } else if (role === 'waiter') {
+        res.redirect("/waiters/" + username); 
+      } else {
+        res.redirect("/login"); 
+      }
     } else {
       res.redirect("/register");
     }
   }
+
+
+
+  //   if (exist) {
+  //     res.redirect("/waiters/" + username);
+  //   } else {
+  //     res.redirect("/register");
+  //   }
+  // }
 
   async function register(req, res) {
     const password = req.body.password;
@@ -30,6 +45,7 @@ export default function WaiterRoutes(waiter_db) {
     const checkdays = await waiter_db.getDayNames();
     const daysForWaiter = await waiter_db.getDayNamesForWaiter(username);
     const successMsg = req.flash("success")[0];
+    const errorMsg = req.flash("error")[0];
     // console.log(daysForWaiter);
     const formattedDaysForWaiter = checkdays.map((day) => {
       return {
@@ -44,41 +60,41 @@ export default function WaiterRoutes(waiter_db) {
       scheduleDays: formattedDaysForWaiter,
       daysForWaiter: daysForWaiter,
       successMsg: successMsg,
+      errorMsg: errorMsg,
     });
   }
 
   async function select(req, res) {
-    const username = req.body.username;
+    const username = req.params.username;
     const scheduleDays = req.body.checkday;
     const dayIds = ["1", "2", "3", "4", "5", "6", "7"];
-    //  const waiter_id = await waiter_db.insertWaiter(username);
+    // console.log(scheduleDays);
+    const waiter_id = await waiter_db.insertWaiter(username);
 
     // Check if less than two days are selected
-    if (!scheduleDays || scheduleDays.length < 2) {
-      req.flash(
-        "success",
-        "Please select at least two days for your schedule."
-      );
+    if (!scheduleDays || scheduleDays.length < 3) {
+      req.flash("error","Please select at least three days for your schedule.");
       res.redirect("/waiters/" + username);
-    }
-
-    // Unselect all days first
-    for (const workday_id of dayIds) {
-      await waiter_db.unselectDays(Number(workday_id));
-    }
-
-    // Select the chosen days
-    for (const workday_id of dayIds) {
-      if (scheduleDays.includes(workday_id)) {
-        await waiter_db.selectDays(Number(workday_id));
+    } else {
+      // Unselect all days first
+      for (const workday_id of dayIds) {
+        await waiter_db.unselectDays(Number(workday_id), Number(waiter_id));
       }
-    }
 
-    req.flash("success", "You have successfully updated your schedule.");
-    res.redirect("/waiters/" + req.params.username);
+      // Select the chosen days
+      for (const workday_id of dayIds) {
+        if (scheduleDays.includes(workday_id)) {
+          await waiter_db.selectDays(Number(workday_id), Number(waiter_id));
+        }
+      }
+
+      req.flash("success", "You have successfully updated your schedule.");
+      res.redirect("/waiters/" + req.params.username);
+    }
   }
 
   async function viewWorkingWaiters(req, res) {
+    const successMsg = req.flash("success")[0];
     const days = {
       Monday: await waiter_db.getWaiterNamesForDay("Monday"),
       Tuesday: await waiter_db.getWaiterNamesForDay("Tuesday"),
@@ -92,6 +108,7 @@ export default function WaiterRoutes(waiter_db) {
     console.log(days);
     res.render("admin", {
       days,
+      successMsg
     });
   }
 

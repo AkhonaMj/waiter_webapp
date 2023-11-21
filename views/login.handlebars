@@ -1,9 +1,28 @@
-
+<h1>Welcome to waiters app</h1>
+<p class="instruction">Please log in to update your schedule</p>
 <div class="login">
-    <h2>Login</h2>
- <form action="/login" method="post" id="loginForm">
-        <input type="text" id="username" name="username" placeholder="Username" required>
-        <input type="password" id="password" name="password" placeholder="Password" required>
-       <button type="submit">Login</button>
- </form>
+  <h2>Login</h2>
+  <form action="/login" method="post" id="loginForm">
+    <input
+      type="text"
+      id="username"
+      name="username"
+      placeholder="Username"
+      required
+    />
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Password"
+      required
+    />
+    <div><select name="role" required>
+    <label for="role" name="role">Role:</label>
+      <option value="waiter" >Waiter</option>
+      <option value="admin">Admin</option>
+    </select></div>
+    <button type="submit">Login</button>
+    
+  </form>
 </div>
