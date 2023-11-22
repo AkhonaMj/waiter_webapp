@@ -1,34 +1,31 @@
+<script>
+    setTimeout(function () {
+        document.querySelector(".success").remove();
+    }, 3000)
+</script>
 <h1>Waiter Schedule</h1>
+
 
 <form action="/days" method="POST">
 
   <body>
 <p class="success">{{successMsg}}</p>
-    {{!-- <table>
-      {{#each days}}
-        <tr>
-          <th>{{@key}}</th>
-          {{#each this}}
-            <td class="{{applyClassName ../this}}">{{users}}</td>
-          {{/each}}
-        </tr>
-      {{/each}}
-
-    </table> --}}
 <table>
-  <tr>
-    {{#each days}}
+  {{#each days}}
+    <tr>
       <th>{{@key}}</th>
-    {{/each}}
-  </tr>
-  <tr>
-    {{#each days}}
-      {{#each this}}
-        <td class="{{applyClassName ../this}}">{{users}}</td>
-      {{/each}}
-    {{/each}}
-  </tr>
+      {{#if this.length}} <!-- Check if there are any users/waiters for the current day -->
+        {{#each this}}
+          <td class="{{applyClassName ../this}}">{{users}}</td>
+        {{/each}}
+      {{else}}
+        <td colspan="1">No waiters available</td>
+      {{/if}}
+    </tr>
+  {{/each}}
 </table>
+
+
 
     <button type="submit" formaction="/reset"
                   onclick="return confirm('Are you sure you want to clear schedule?')">Reset</button>
